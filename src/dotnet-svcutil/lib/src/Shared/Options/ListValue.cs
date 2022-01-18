@@ -16,7 +16,7 @@ namespace Microsoft.Tools.ServiceModel.Svcutil
     /// <summary>
     /// Represents an option that can be specified multiple times in the command line.
     /// </summary>
-    internal class ListValue<TValue> : ICollection, IList<TValue>, IList
+    public class ListValue<TValue> : ICollection, IList<TValue>, IList
     {
         private List<TValue> InnerList { get; set; } = new List<TValue>();
         public ListValueOption<TValue> Owner { get; set; }

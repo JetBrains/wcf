@@ -17,7 +17,7 @@ using WsdlNS = System.Web.Services.Description;
 
 namespace Microsoft.Tools.ServiceModel.Svcutil
 {
-    internal class CodeSerializer
+    public class CodeSerializer
     {
         private static readonly string s_defaultFileName = "ServiceReferences";
         private static readonly Encoding s_ouputEncoding = new System.Text.UTF8Encoding(true);
@@ -25,7 +25,7 @@ namespace Microsoft.Tools.ServiceModel.Svcutil
         private readonly CodeDomProvider _codeProvider;
         private readonly string _outputFilePath;
 
-        internal CodeSerializer(CommandProcessorOptions options, IEnumerable<MetadataSection> inputMetadata)
+        public CodeSerializer(CommandProcessorOptions options, IEnumerable<MetadataSection> inputMetadata)
         {
             string extension = GetOutputFileExtension(options);
             string outputFilename = GetOutputFileName(options, inputMetadata);

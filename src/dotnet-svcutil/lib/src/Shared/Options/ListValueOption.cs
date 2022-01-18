@@ -17,7 +17,7 @@ namespace Microsoft.Tools.ServiceModel.Svcutil
     /// Represents an option that can be specified multiple times in the command line.
     /// Setting a value in the command line for an option that can be set multiple times is like adding an element to the collection.
     /// </summary>
-    internal class ListValueOption<TValue> : OptionBase
+    public class ListValueOption<TValue> : OptionBase
     {
         private ListValue<TValue> InnerList { get; }
 

@@ -189,7 +189,7 @@ namespace Microsoft.Tools.ServiceModel.Svcutil.Metadata
                             _currentRequest?.Abort();
                             cancellationToken.ThrowIfCancellationRequested();
                         }
-                        await Task.Delay(100);
+                        await Task.Delay(100).ConfigureAwait(false);
                     }
 
                     _metadataSet = this.EndGetMetadata(result);
@@ -259,7 +259,7 @@ namespace Microsoft.Tools.ServiceModel.Svcutil.Metadata
                             _currentRequest?.Abort();
                             cancellationToken.ThrowIfCancellationRequested();
                         }
-                        await Task.Delay(100);
+                        await Task.Delay(100).ConfigureAwait(false);
                     }
 
                     webResponse = (HttpWebResponse)_currentRequest.EndGetResponse(result);

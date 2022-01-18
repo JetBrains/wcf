@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Microsoft.Tools.ServiceModel.Svcutil
 {
-    internal class ProcessRunner
+    public class ProcessRunner
     {
         public class ProcessException : Exception
         {

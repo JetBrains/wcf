@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Microsoft.Tools.ServiceModel.Svcutil
 {
-    internal class FrameworkInfo
+    public class FrameworkInfo
     {
         // https://github.com/dotnet/corefx/blob/master/Documentation/architecture/net-platform-standard.md
         public const string Netstandard = "netstandard";

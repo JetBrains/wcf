@@ -15,7 +15,7 @@ using Microsoft.Extensions.DependencyModel;
 
 namespace Microsoft.Tools.ServiceModel.Svcutil
 {
-    internal class MSBuildProj : IDisposable
+    public class MSBuildProj : IDisposable
     {
         private bool _isSaved;
         private bool _ownsDirectory;

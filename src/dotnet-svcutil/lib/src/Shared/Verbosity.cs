@@ -9,7 +9,7 @@ namespace Microsoft.Tools.ServiceModel.Svcutil
     /// <summary>
     /// Represens a verbosity level.
     /// </summary>
-    internal enum Verbosity
+    public enum Verbosity
     {
         /// <summary>
         /// Only errors displayed.

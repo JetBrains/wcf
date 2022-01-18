@@ -4,7 +4,7 @@
 
 namespace Microsoft.Tools.ServiceModel.Svcutil
 {
-    internal enum SerializerMode
+    public enum SerializerMode
     {
         Default,
         Auto,

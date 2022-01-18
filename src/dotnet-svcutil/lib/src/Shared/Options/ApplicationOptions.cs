@@ -16,7 +16,7 @@ namespace Microsoft.Tools.ServiceModel.Svcutil
     /// This is the options container OM base class and it defines the basic json schema (see options serializer class).
     /// Provides base serialization and option handling functionality.
     /// </summary>
-    internal partial class ApplicationOptions : IOptionsSerializationHandler
+    public partial class ApplicationOptions : IOptionsSerializationHandler
     {
         // dictionary of options name/object, kept sorted for serialization purposes and to ease of troubleshooting.
         private SortedDictionary<string, OptionBase> PropertyBag { get; set; }

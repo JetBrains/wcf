@@ -86,7 +86,7 @@ namespace SvcutilTest
             Assert.False(string.IsNullOrEmpty(options), $"{nameof(options)} not initialized!");
             Assert.True(File.Exists(project?.FullPath), $"{nameof(project)} is not initialized!");
 
-            var envVars = new Dictionary<string, string> { { AppInsightsTelemetryClient.OptOutVariable, (!AppInsightsTelemetryClient.IsUserOptedIn).ToString() } };
+            var envVars = new Dictionary<string, string> { };
 
             ProcessRunner.ProcessResult result;
 

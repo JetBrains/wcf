@@ -4,7 +4,7 @@
 
 namespace Microsoft.Tools.ServiceModel.Svcutil
 {
-    internal enum TypeReuseMode
+    public enum TypeReuseMode
     {
         // Type reuse disabled
         None,

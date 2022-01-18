@@ -24,7 +24,7 @@ namespace Microsoft.Tools.ServiceModel.Svcutil
             using (cancellationToken.Register(() => taskCompletionSrc.SetCanceled()))
             {
                 var actionTask = Task.Run(action, cancellationToken);
-                await Task.WhenAny(actionTask, taskCompletionSrc.Task);
+                await Task.WhenAny(actionTask, taskCompletionSrc.Task).ConfigureAwait(false);
             }
 
             if (cancellationToken.IsCancellationRequested)
@@ -47,7 +47,7 @@ namespace Microsoft.Tools.ServiceModel.Svcutil
 
             using (cancellationToken.Register(() => taskCompletionSrc.SetCanceled()))
             {
-                finishedTask = await Task.WhenAny(Task<T>.Run(func, cancellationToken), taskCompletionSrc.Task);
+                finishedTask = await Task.WhenAny(Task<T>.Run(func, cancellationToken), taskCompletionSrc.Task).ConfigureAwait(false);
             }
 
             if (cancellationToken.IsCancellationRequested)

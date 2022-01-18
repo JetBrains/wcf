@@ -18,7 +18,7 @@ namespace Microsoft.Tools.ServiceModel.Svcutil
     /// This is to support updating the web service reference added to a project. A JSON file with the options used to generate the web service reference
     /// is added along with the generated source file, and is used later to update the reference by passing it as the param to the tool.
     /// </summary>
-    internal class OptionsSerializer<TAppOptions> : JsonConverter where TAppOptions : ApplicationOptions, new()
+    public class OptionsSerializer<TAppOptions> : JsonConverter where TAppOptions : ApplicationOptions, new()
     {
         /* JSON BASIC SCHEMA
             {

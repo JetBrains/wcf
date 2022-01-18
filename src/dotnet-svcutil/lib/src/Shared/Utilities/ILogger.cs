@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Microsoft.Tools.ServiceModel.Svcutil
 {
-    internal interface ILogger
+    public interface ILogger
     {
         Task WriteErrorAsync(string errorMessage, bool logToUI);
         Task WriteWarningAsync(string warningMessage, bool logToUI);

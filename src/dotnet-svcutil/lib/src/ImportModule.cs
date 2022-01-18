@@ -22,7 +22,7 @@ using WsdlNS = System.Web.Services.Description;
 
 namespace Microsoft.Tools.ServiceModel.Svcutil
 {
-    internal partial class ImportModule
+    public partial class ImportModule
     {
         private readonly CodeCompileUnit _codeCompileUnit;
         private readonly WsdlImporter _wsdlImporter;
@@ -31,7 +31,7 @@ namespace Microsoft.Tools.ServiceModel.Svcutil
 
         private CommandProcessorOptions _options;
 
-        internal CodeCompileUnit CodeCompileUnit
+        public CodeCompileUnit CodeCompileUnit
         {
             get
             {
@@ -39,7 +39,7 @@ namespace Microsoft.Tools.ServiceModel.Svcutil
             }
         }
 
-        internal ImportModule(CommandProcessorOptions options, ServiceDescriptor serviceDescriptor, WsdlImporter importer)
+        public ImportModule(CommandProcessorOptions options, ServiceDescriptor serviceDescriptor, WsdlImporter importer)
         {
             _codeCompileUnit = new CodeCompileUnit();
             _options = options;

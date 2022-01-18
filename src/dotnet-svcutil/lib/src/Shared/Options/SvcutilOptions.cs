@@ -8,7 +8,7 @@ using System.IO;
 
 namespace Microsoft.Tools.ServiceModel.Svcutil
 {
-    internal class SvcutilOptions : UpdateOptions
+    public class SvcutilOptions : UpdateOptions
     {
         #region option keys
         public const string BootstrapPathKey = "bootstrapPath";

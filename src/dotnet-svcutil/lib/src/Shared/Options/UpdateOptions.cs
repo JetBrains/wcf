@@ -9,7 +9,7 @@ using System.IO;
 
 namespace Microsoft.Tools.ServiceModel.Svcutil
 {
-    internal partial class UpdateOptions : ApplicationOptions
+    public partial class UpdateOptions : ApplicationOptions
     {
         #region option keys
         public const string CollectionTypesKey = "collectionType";

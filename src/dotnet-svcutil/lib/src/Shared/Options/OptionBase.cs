@@ -12,7 +12,7 @@ using System.Linq;
 
 namespace Microsoft.Tools.ServiceModel.Svcutil
 {
-    internal class OptionBase
+    public class OptionBase
     {
         public OptionBase(string name, params string[] aliases) : this(name, null, aliases)
         {

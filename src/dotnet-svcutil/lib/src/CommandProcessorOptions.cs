@@ -16,7 +16,7 @@ using Microsoft.CodeDom.Compiler;
 
 namespace Microsoft.Tools.ServiceModel.Svcutil
 {
-    internal partial class CommandProcessorOptions : SvcutilOptions
+    public partial class CommandProcessorOptions : SvcutilOptions
     {
         #region Options-related properties
         public const string UpdateServiceReferenceKey = "update";
@@ -60,7 +60,7 @@ namespace Microsoft.Tools.ServiceModel.Svcutil
 
         private static readonly List<string> s_cmdLineOverwriteSwitches = new List<string> { Switches.NoLogo.Name, Switches.Verbosity.Name, Switches.ToolContext.Name, Switches.ProjectFile.Name, Switches.AcceptCertificate.Name };
 
-        internal class CommandSwitches
+        public class CommandSwitches
         {
             public readonly CommandSwitch BootstrapDir = new CommandSwitch(BootstrapPathKey, "bd", SwitchType.SingletonValue, OperationalContext.Infrastructure);
             public readonly CommandSwitch CollectionType = new CommandSwitch(CollectionTypesKey, "ct", SwitchType.ValueList);

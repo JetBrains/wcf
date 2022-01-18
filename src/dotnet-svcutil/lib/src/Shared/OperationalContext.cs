@@ -7,7 +7,7 @@ namespace Microsoft.Tools.ServiceModel.Svcutil
     /// <summary>
     /// Note: the order of the values matters as it is used as a context level.
     /// </summary>
-    internal enum OperationalContext
+    public enum OperationalContext
     {
         // The tool works in the context of a project: DotNetCliToolReference.
         Project,

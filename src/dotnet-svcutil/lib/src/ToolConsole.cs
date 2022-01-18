@@ -201,11 +201,6 @@ namespace Microsoft.Tools.ServiceModel.Svcutil
             if (condition && ToolConsole.Verbosity > Verbosity.Minimal && ToolConsole.ToolModeLevel != OperationalContext.Infrastructure)
             {
                 ToolConsole.WriteLine(string.Format(SR.LogoFormat, Tool.ToolName, Tool.PackageVersion, SR.Microsoft_Copyright_CommandLine_Logo), LogTag.Important);
-
-                if (AppInsightsTelemetryClient.IsUserOptedIn)
-                {
-                    ToolConsole.WriteLine(SR.TelemetryEnabled, LogTag.Information);
-                }
             }
         }
 

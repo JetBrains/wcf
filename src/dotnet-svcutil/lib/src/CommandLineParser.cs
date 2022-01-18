@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace Microsoft.Tools.ServiceModel.Svcutil
 {
-    internal enum SwitchType
+    public enum SwitchType
     {
         Flag,
         SingletonValue,
@@ -17,7 +17,7 @@ namespace Microsoft.Tools.ServiceModel.Svcutil
         FlagOrSingletonValue
     }
 
-    internal class CommandSwitch
+    public class CommandSwitch
     {
         public const string AbbreviationSwitchIndicator = "-";
         public const string FullSwitchIndicator = "--";

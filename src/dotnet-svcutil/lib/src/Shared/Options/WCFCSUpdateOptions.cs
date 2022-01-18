@@ -13,7 +13,7 @@ namespace Microsoft.Tools.ServiceModel.Svcutil
     /// Represents the options as formatted by the WCF Connected Service.
     /// This class maps the WCF CS options into update options.
     /// </summary>
-    internal class WCFCSUpdateOptions : UpdateOptions
+    public class WCFCSUpdateOptions : UpdateOptions
     {
         #region option keys
         public const string CollectionTypeReferenceKey = "CollectionTypeReference";

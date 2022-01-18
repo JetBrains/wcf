@@ -11,7 +11,7 @@ using NuGet.Versioning;
 
 namespace Microsoft.Tools.ServiceModel.Svcutil
 {
-    internal enum ProjectDependencyType
+    public enum ProjectDependencyType
     {
         Unknown,
         Project,
@@ -20,7 +20,7 @@ namespace Microsoft.Tools.ServiceModel.Svcutil
         Tool
     }
 
-    internal class ProjectDependency : IComparable<ProjectDependency>
+    public class ProjectDependency : IComparable<ProjectDependency>
     {
         private const string DefaultVersion = "*";
         public const string NetCoreAppPackageID = "Microsoft.NETCore.App";

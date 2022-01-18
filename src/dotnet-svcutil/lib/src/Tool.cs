@@ -86,11 +86,6 @@ namespace Microsoft.Tools.ServiceModel.Svcutil
 
                 ValidateUICulture(options);
 
-                if (options.NoTelemetry == true)
-                {
-                    AppInsightsTelemetryClient.IsUserOptedIn = false;
-                }
-
                 ToolConsole.Init(options);
                 ToolConsole.WriteHeaderIf(options.NoLogo != true);
 
@@ -167,30 +162,6 @@ namespace Microsoft.Tools.ServiceModel.Svcutil
             {
                 result = await ProcessExceptionAsync(e, options);
             }
-            finally
-            {
-                try
-                {
-                    // Don't log telemetry if we're running from bootstrapper or connected service.
-                    if (options?.ToolContext <= OperationalContext.Global)
-                    {
-                        var properties = new Dictionary<string, string>()
-                        {
-                            { "IsUpdate", (options?.IsUpdateOperation).ToString() },
-                            { "TargetFramework", options?.TargetFramework?.FullName },
-                            { "Parameters", options?.ToTelemetryString() },
-                            { "ExitCode", result.ToString() },
-                            { "RequiresBootstrapping", options?.RequiresBoostrapping.ToString() },
-                        };
-
-                        var telemetryClient = await AppInsightsTelemetryClient.GetInstanceAsync(cancellationToken).ConfigureAwait(false);
-                        telemetryClient.TrackEvent("ToolRun", properties);
-                    }
-                }
-                catch
-                {
-                }
-            }
 
             return result;
         }
@@ -260,7 +231,7 @@ namespace Microsoft.Tools.ServiceModel.Svcutil
             return result == (int)ToolExitCode.Success || result == (int)ToolExitCode.ValidationErrorTurnedWarning;
         }
 
-        private static bool CanAddProjectReferences(CommandProcessorOptions options)
+        public static bool CanAddProjectReferences(CommandProcessorOptions options)
         {
             // Project references are added at the end of the process, never but the bootstrapper which may not be even invoked.
             // ensure the output files goes under the project dir.
@@ -268,7 +239,7 @@ namespace Microsoft.Tools.ServiceModel.Svcutil
                 PathHelper.IsUnderDirectory(options.OutputFile.FullName, new DirectoryInfo(options.Project.DirectoryPath), out var filePath, out var relPath);
         }
 
-        private static async Task<bool> AddProjectReferencesAsync(MSBuildProj project, CommandProcessorOptions options, CancellationToken cancellationToken)
+        public static async Task<bool> AddProjectReferencesAsync(MSBuildProj project, CommandProcessorOptions options, CancellationToken cancellationToken)
         {
             try
             {
@@ -295,7 +266,7 @@ namespace Microsoft.Tools.ServiceModel.Svcutil
             return false;
         }
 
-        private static async Task GenerateParamsFileAsync(CommandProcessorOptions options, ILogger logger, CancellationToken cancellationToken)
+        public static async Task<string> GenerateParamsFileAsync(CommandProcessorOptions options, ILogger logger, CancellationToken cancellationToken, bool saveAsWCFCSUpdateOprions = false)
         {
             // params file is generated on first run, never on update and never by the bootstrapper.
 
@@ -303,7 +274,9 @@ namespace Microsoft.Tools.ServiceModel.Svcutil
             {
                 using (var safeLogger = await SafeLogger.WriteStartOperationAsync(logger, "Generating svcutil params file ...").ConfigureAwait(false))
                 {
-                    var updateOptions = options.CloneAs<UpdateOptions>();
+                    var updateOptions = saveAsWCFCSUpdateOprions 
+                        ? options.CloneAs<WCFCSUpdateOptions>() 
+                        : options.CloneAs<UpdateOptions>();
                     updateOptions.ProviderId = Tool.ToolName;
                     updateOptions.Version = Tool.PackageVersion;
 
@@ -311,10 +284,16 @@ namespace Microsoft.Tools.ServiceModel.Svcutil
 
                     updateOptions.MakePathsRelativeTo(options.OutputDir);
 
-                    var paramsFile = Path.Combine(options.OutputDir.FullName, CommandProcessorOptions.SvcutilParamsFileName);
+                    var fileName = saveAsWCFCSUpdateOprions
+                        ? CommandProcessorOptions.WCFCSParamsFileName
+                        : CommandProcessorOptions.SvcutilParamsFileName;
+                    var paramsFile = Path.Combine(options.OutputDir.FullName, fileName);
                     await AsyncHelper.RunAsync(() => updateOptions.Save(paramsFile), cancellationToken).ConfigureAwait(false);
+                    return paramsFile;
                 }
             }
+
+            return null;
         }
 
         private static void ThrowOnValidationErrors(CommandProcessorOptions options)
@@ -393,15 +372,6 @@ namespace Microsoft.Tools.ServiceModel.Svcutil
                         {
                             exMsg = Utils.GetExceptionMessage(ex, true);
                             await options.Logger.WriteErrorAsync(exMsg, logToUI: false).ConfigureAwait(false);
-                        }
-
-                        // Don't log telemetry if we're running from bootstrapper or connected service.
-                        // if options = null, it must be that a parsing exception occurred.
-                        if (options == null || options.ToolContext <= OperationalContext.Global)
-                        {
-                            exMsg = exMsg ?? Utils.GetExceptionMessage(ex, true);
-                            var telemetryClient = await AppInsightsTelemetryClient.GetInstanceAsync(CancellationToken.None).ConfigureAwait(false);
-                            telemetryClient.TrackError("Exception", exMsg);
                         }
                     }
                 }

@@ -125,8 +125,6 @@ namespace SvcutilTest
         #region Initialization
         public ClassFixture()
         {
-            AppInsightsTelemetryClient.IsUserOptedIn = false;
-
             g_RepositoryRoot = FindRepositoryRoot();
 
             var vsTestsRoot = GetSTestRootDir();
