@@ -16,6 +16,7 @@ namespace Microsoft.Tools.ServiceModel.Svcutil
 {
     public class ProcessRunner
     {
+        public static Func<string> GetDotnetPath;
         public class ProcessException : Exception
         {
             public int ExitCode { get; private set; }
@@ -52,6 +53,10 @@ namespace Microsoft.Tools.ServiceModel.Svcutil
 
         public static async Task<ProcessResult> RunAsync(string processName, string processArgs, string currentDir, bool redirectOutput, bool throwOnError, IDictionary<string, string> environmentVariables, ILogger logger, CancellationToken cancellationToken)
         {
+            if (processName == "dotnet" && GetDotnetPath != null)
+            {
+                processName = GetDotnetPath();
+            }
             bool isErrorLogged = false;
             var errorTextBldr = new StringBuilder();
             var outputTextBldr = new StringBuilder();
