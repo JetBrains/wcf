@@ -10,8 +10,9 @@ using System.ServiceModel.Description;
 
 namespace Microsoft.Tools.ServiceModel.Svcutil
 {
-    internal class WcfCodeGenerationExtension : IWcfCodeGenerationExtension
+    public class WcfCodeGenerationExtension : IWcfCodeGenerationExtension
     {
+        public static bool MoveBindingsToCode = true;
         private Collection<ServiceEndpoint> _endpoints;
         private bool _errorDetected;
         private bool _isVB;
@@ -77,8 +78,12 @@ namespace Microsoft.Tools.ServiceModel.Svcutil
             if (generator != null)
             {
                 RunFixups(CodeFixup.GetFixups(generator), _options);
-                ConfigToCode converter = new ConfigToCode() { IsVB = _isVB };
-                converter.MoveBindingsToCode(generator.TargetCompileUnit, _endpoints);
+                if (MoveBindingsToCode)
+                {
+                  ConfigToCode converter = new ConfigToCode() {IsVB = _isVB};
+                  converter.MoveBindingsToCode(generator.TargetCompileUnit, _endpoints);
+                }
+
                 CodeDomVisitor.Visit(new CodeDomVisitor[] { new NamespaceFixup() }, generator.TargetCompileUnit);
                 UpdateExitStatus(generator.Errors);
             }
